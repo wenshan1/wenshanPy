@@ -22,10 +22,10 @@ def getDBEnginee4ali ():
     return engine
 """
 
-dbHost = '128.224.158.151'
-dbUser = 'stock'
-dbPwd = 'stock.8810'
-dbDataBase = 'stock'
+dbHost = '128.224.158.223'
+dbUser = 'blan'
+dbPwd = 'blan'
+dbDataBase = 'blan'
 
 def getDBEnginee ():
     #'mysql+pymysql://stock:stock.8810@47.93.11.229:3306/stock'

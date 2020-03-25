@@ -1,29 +1,17 @@
 # wenshanPy
 
-#### Description
+# MYSQL 中文解决方案
+## windows解决方案一 
+设置MySQL数据库默认编码my.ini文件中，default-character-set=utf8   (注意是utf8中间没有-) [mysql] default-character-set=utf8 [mysqld] default-character-set=utf8
+
+## Linux解决方案 
+创建数据库是用utf8： create database blan charset utf8;
+
+#### 描述
 平时python代码的集合，每个目录都是一个小项目。
 
-#### Software Architecture
-Software architecture description
-
-#### Installation
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
-
-#### Instructions
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
-
-#### Contribution
-
-1.  Fork the repository
-2.  Create Feat_xxx branch
-3.  Commit your code
-4.  Create Pull Request
+## 需要安装的模块
+./conda install pymysql
 
 
 #### Gitee Feature

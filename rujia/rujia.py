@@ -8,6 +8,7 @@ required package: pymysql
 """
 
 import pymysql.cursors
+from common import db
 
 def createTable (conn):
     cursor = conn.cursor()
@@ -33,17 +34,11 @@ def createTable (conn):
                    )
     conn.commit()
 
-def dbConnect ():
-    conn = pymysql.connect(host='localhost', port=3306, user='root', 
-                           passwd='root', db='stock', charset='utf8')
-    return conn
 
-def dbDisconnect (conn):
-    conn.close ()
 
 # 解析文件并且保存到数据库中。
 def analysisFile (fileName):
-    conn = dbConnect()
+    conn = db.dbConnect ()
     createTable (conn)
     ncount = 0
 
@@ -65,7 +60,7 @@ def analysisFile (fileName):
                          rec[0], rec[1], rec[2], rec[3], rec[4], rec[5], rec[6], rec[7], rec[8], rec[19], rec[20], rec[21], rec[22], rec[-2], rec[-1])
                 wsql = insert_sql % row_tulpe
                 ncount += 1
-            except Exception as e:
+            except Exception :
                 pass
 
             try:
@@ -81,17 +76,17 @@ def analysisFile (fileName):
                     cursor.close()
                     ncount = 0
 
-            except Exception as e:
+            except Exception:
                 # print (e)
                 pass
             finally:
                 pass
 
-    dbDisconnect(conn)
+    db.dbDisconnect(conn)
 
 
 if __name__ == '__main__':
-    analysisFile('D:/qqtongbu/tongbu/python/rujia/hotel.txt')
+    analysisFile('C:/QQTongBu/tongbu/python/rujia/hotel.txt')
 
 
 
