@@ -22,7 +22,7 @@ def getDBEnginee4ali ():
     return engine
 """
 
-dbHost = '128.224.158.223'
+dbHost = '192.168.31.101'
 dbUser = 'blan'
 dbPwd = 'blan'
 dbDataBase = 'blan'
