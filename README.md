@@ -11,7 +11,7 @@
 平时python代码的集合，每个目录都是一个小项目。
 
 ## 需要安装的模块
-./conda install pymysql
+./conda install pymysql tushare
 
 
 #### Gitee Feature

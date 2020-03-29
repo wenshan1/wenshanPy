@@ -57,7 +57,7 @@ def downloadPage ():
     headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:61.0) Gecko/20100101 Firefox/61.0"}
     url = "http://bjjs.zjw.beijing.gov.cn/bjjs/fwgl/fdcjy/fwjy/index.shtml"
     r = requests.get(url, headers=headers)
-    r.encoding = 'gb2312'
+    r.encoding = 'utf-8'
     return r.text
 
 ''' 存量房网上签约 '''
@@ -67,7 +67,7 @@ def cunLiangFangTable ():
     body = soup.body
     tbls = body.find_all ("table")
     ''' 存量房网上签约表'''
-    tbl = tbls[16]
+    tbl = tbls[17]
     return tbl
         
 class FetchBjfdc:
