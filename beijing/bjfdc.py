@@ -60,14 +60,19 @@ def downloadPage ():
     r.encoding = 'utf-8'
     return r.text
 
-''' 存量房网上签约 '''
-def cunLiangFangTable ():
+def getAllTable ():
     html = downloadPage ()   # 下载界面
     soup = BeautifulSoup(html, 'html5lib')
     body = soup.body
     tbls = body.find_all ("table")
+    return tbls
+
+allTables = getAllTable ()
+
+''' 存量房网上签约 '''
+def cunLiangFangTable ():
     ''' 存量房网上签约表'''
-    tbl = tbls[17]
+    tbl = allTables[17]
     return tbl
         
 class FetchBjfdc:
@@ -111,12 +116,67 @@ class FetchBjfdc:
             
         print ("qianyueshu_zhuzai:" + str(self.qianyue_zhuzai))        
         
+        
+    '''期房网上签约数据'''
+    def getQiFang (self, tbls):
+        tbl = tbls[6]
+        trs = tbl.find_all("tr")
+        '''网上签约总套数'''
+        tds = trs[1].find_all ("td")
+        qianyueTxt = tds[1].text
+        qianyueTxt=qianyueTxt.strip ('\n')
+        qianyueTxt=qianyueTxt.strip ()
+        self.qifang_zong = int (qianyueTxt)
+
+        '''网上签约住宅套数'''            
+        tbl = tbls[6]
+        trs = tbl.find_all("tr")
+        tds = trs[3].find_all ("td")
+        qianyueTxt = tds[1].text
+        qianyueTxt=qianyueTxt.strip ('\n')
+        qianyueTxt=qianyueTxt.strip ()
+        self.qifang_zhuzhai = int (qianyueTxt)
+        
+        print ("期房网上签约数据")
+        print ("qianyueshu:" + str(self.qifang_zong))
+        print ("qianyueshu_zhuzai:" + str(self.qifang_zhuzhai))
+                
+    '''现房网上签约数据'''
+    def getXianFang (self, tbls):
+        tbl = tbls[10]
+        trs = tbl.find_all("tr")
+        '''网上签约总套数'''
+        tds = trs[1].find_all ("td")
+        qianyueTxt = tds[1].text
+        qianyueTxt=qianyueTxt.strip ('\n')
+        qianyueTxt=qianyueTxt.strip ()
+        self.xianfang_zong = int (qianyueTxt)
+        print ("现房网上签约数据")
+        print (self.xianfang_zong)
+            
+        '''网上签约住宅套数'''            
+        tbl = tbls[10]
+        trs = tbl.find_all("tr")
+        tds = trs[3].find_all ("td")
+        qianyueTxt = tds[1].text
+        qianyueTxt=qianyueTxt.strip ('\n')
+        qianyueTxt=qianyueTxt.strip ()
+        self.xianfang_zhuzhai = int (qianyueTxt)   
+        print (self.xianfang_zhuzhai)
+        
     def getAndSaveData (self):
         tbl = cunLiangFangTable ()
         self.getCunLiangFang (tbl)
-        
-        bjfdc = BjfdcData (riqi=self.riqi, cunliangfang_zong=self.qianyue_zong,
-                           cunliangfang_zhuzai=self.qianyue_zhuzai)
+        self.getQiFang (allTables)
+        self.getXianFang(allTables)
+
+        bjfdc = BjfdcData (riqi=self.riqi, 
+                           cunliangfang_zong=self.qianyue_zong,
+                           cunliangfang_zhuzai=self.qianyue_zhuzai,
+                           xianfang_zong=self.xianfang_zong,
+                           xianfang_zhuzhai=self.xianfang_zhuzhai,
+                           qifang_zong=self.qifang_zong,
+                           qifang_zhuzhai=self.qifang_zhuzhai)
         
         session = DBSessionT ()
         try:
