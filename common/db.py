@@ -48,3 +48,7 @@ def truncateTable (tablename, conn):
     conn.commit()
     cursor.close()
     return
+
+def getSQLLiteEngine ():
+    sqlliteEng = create_engine('sqlite:///C:/QQTongBu/tongbu/blan.db')
+    return sqlliteEng

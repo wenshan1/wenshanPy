@@ -14,7 +14,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import Column, String, Integer, Date
 
-# 创建对象的基类:
+# mysql 创建对象的基类:
 AlBase = declarative_base()
 engine = db.getDBEnginee()
 DBSessionT = sessionmaker(bind=engine)
@@ -46,8 +46,7 @@ class BjfdcData (AlBase):
     qifang_zong = Column(Integer)
     qifang_zhuzhai = Column(Integer)
 
-
-def createBjfdcData ():
+def createBjfdcTable (engine):
     #IndexBasic.__table__.drop (bind = engine)
     AlBase.metadata.create_all(engine)
     
@@ -187,8 +186,41 @@ class FetchBjfdc:
         finally:
             session.close ()        
         
+''' 备份数据到sqllite中 '''
+def backupDataToSQLlite ():
+    eng = db.getSQLLiteEngine()
+    SQLliteSessionT = sessionmaker(bind=eng)
+    
+    session = SQLliteSessionT ()
+    try:
+        createBjfdcTable (eng)
+    except Exception as e:
+        pass
+        
+    try:
+        session.execute ('DELETE FROM   bjfdc')
+    except Exception as e:
+        pass
+
+         
+    mysqlSession = DBSessionT ()
+    for instance in mysqlSession.query(BjfdcData).order_by(BjfdcData.riqi):
+        bjfdc = BjfdcData (riqi=instance.riqi, 
+                           cunliangfang_zong=instance.cunliangfang_zong,
+                           cunliangfang_zhuzai=instance.cunliangfang_zhuzai,
+                           xianfang_zong=instance.xianfang_zong,
+                           xianfang_zhuzhai=instance.xianfang_zhuzhai,
+                           qifang_zong=instance.qifang_zong,
+                           qifang_zhuzhai=instance.qifang_zhuzhai)
+        session.add (bjfdc)
+        session.commit ()
+        
+    mysqlSession.close()
+    session.close()
 
 if __name__ == '__main__':
-    bjfdc = FetchBjfdc ()
-    bjfdc.getAndSaveData()
+    backupDataToSQLlite ()
+    
+    #bjfdc = FetchBjfdc ()
+    #bjfdc.getAndSaveData()
 
