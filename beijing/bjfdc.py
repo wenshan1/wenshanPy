@@ -54,7 +54,7 @@ def createBjfdcTable (engine):
 def downloadPage ():
     '''用于下载页面'''
     headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:61.0) Gecko/20100101 Firefox/61.0"}
-    url = "http://bjjs.zjw.beijing.gov.cn/bjjs/fwgl/fdcjy/fwjy/index.shtml"
+    url = "http://bjjs.zjw.beijing.gov.cn/eportal/ui?pageId=307749"
     r = requests.get(url, headers=headers)
     r.encoding = 'utf-8'
     return r.text
