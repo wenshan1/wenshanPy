@@ -50,5 +50,5 @@ def truncateTable (tablename, conn):
     return
 
 def getSQLLiteEngine ():
-    sqlliteEng = create_engine('sqlite:///C:/QQTongBu/tongbu/blan.db')
+    sqlliteEng = create_engine('sqlite:///C:/Users/blan/OneDrive - Wind River Systems/blan.db')
     return sqlliteEng
